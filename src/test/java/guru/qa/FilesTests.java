@@ -2,9 +2,13 @@ package guru.qa;
 
 import com.codeborne.pdftest.PDF;
 import com.codeborne.xlstest.XLS;
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.model.FileHeader;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,12 +28,25 @@ public class FilesTests {
         assertThat(parsed.numberOfPages).isGreaterThan(3);
         System.out.println();
     }
+
     @Test
     void xlsxTest() throws Exception {
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream("files/sample.xlsx")) {
             XLS parsed = new XLS(stream);
             assertThat(parsed.excel.getSheetAt(0).getRow(1).getCell(1).getStringCellValue())
                     .isEqualTo("Dulce");
+            System.out.println();
         }
     }
+
+    @Test
+    void zipWithPasswordTest() throws Exception {
+        ZipFile zipFile = new ZipFile("src/test/resources/files/sample.zip", "qwerty".toCharArray());
+        try (InputStream is = zipFile.getInputStream(zipFile.getFileHeader("test.txt")))
+        {
+            String result = new String(is.readAllBytes(), "UTF-8");
+            assertThat(result).contains("Testing");
+        }
+    }
+
 }
