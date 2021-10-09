@@ -26,7 +26,6 @@ public class FilesTests {
     void pdfTest() throws Exception {
         PDF parsed = new PDF(getClass().getClassLoader().getResource("files/sample.pdf"));
         assertThat(parsed.numberOfPages).isGreaterThan(3);
-        System.out.println();
     }
 
     @Test
@@ -35,7 +34,6 @@ public class FilesTests {
             XLS parsed = new XLS(stream);
             assertThat(parsed.excel.getSheetAt(0).getRow(1).getCell(1).getStringCellValue())
                     .isEqualTo("Dulce");
-            System.out.println();
         }
     }
 
