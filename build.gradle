@@ -12,7 +12,9 @@ dependencies {
             "com.codeborne:pdf-test:1.6.1",
             "net.lingala.zip4j:zip4j:2.9.0",
             "com.codeborne:xls-test:1.4.3",
-            "org.junit.jupiter:junit-jupiter:5.8.1")
+            "org.junit.jupiter:junit-jupiter:5.8.1",
+            'org.assertj:assertj-core:3.21.0'
+    )
 }
 
 tasks.withType(JavaCompile) {
