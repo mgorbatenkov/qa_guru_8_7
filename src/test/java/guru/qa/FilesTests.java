@@ -1,6 +1,7 @@
 package guru.qa;
 
 import com.codeborne.pdftest.PDF;
+import com.codeborne.xlstest.XLS;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -22,5 +23,13 @@ public class FilesTests {
         PDF parsed = new PDF(getClass().getClassLoader().getResource("files/sample.pdf"));
         assertThat(parsed.numberOfPages).isGreaterThan(3);
         System.out.println();
+    }
+    @Test
+    void xlsxTest() throws Exception {
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("files/sample.xlsx")) {
+            XLS parsed = new XLS(stream);
+            assertThat(parsed.excel.getSheetAt(0).getRow(1).getCell(1).getStringCellValue())
+                    .isEqualTo("Dulce");
+        }
     }
 }
